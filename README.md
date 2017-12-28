@@ -1,5 +1,7 @@
 # BlimpNES(s)
 
+![Preview](https://raw.githubusercontent.com/BlimpBureau/blimpnes/master/screenshot.png)
+
 A little hello world in nes, with a floating blimp.
 
 Based on [this tutorial](https://nesdoug.com/2015/11/22/6-sprites/)
