@@ -34,8 +34,8 @@ unsigned char SPRITES[256];
 
 
 const unsigned char PALETTE[]={
-0x19, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,
-0x19, 0x37, 0x24, 1,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0};
+0x0F, 0x1B, 0x1C, 0x0B, 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,
+0x0F, 0x1B, 0x1C, 0x0B, 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0};
 
 const unsigned char MetaSprite_Y[] = {0, 0, 8, 8}; // relative y coordinates
 
@@ -57,8 +57,7 @@ void Reset_Scroll (void);
 void Load_Palette (void);
 void update_Sprites (void);
 
-
-
+int cnt = 0;
 
 void main (void) {
 	All_Off();	// turn off screen
@@ -67,22 +66,47 @@ void main (void) {
 	Load_Palette();
 	Reset_Scroll();
 	All_On();	// turn on screen
+	
 	while (1){	// infinite loop
 		while (NMI_flag == 0);	// wait till NMI
 		
 		//every_frame();	// moved this to the nmi code in reset.s for greater stability
 		
-		if (move == 0)
-			++X1;
-		if (move == 1)
-			++Y1;
-		if (move == 2)
-			--X1;
-		if (move == 3)
-			--Y1;
+		if (cnt == 0) {
+			if (move == 0) {
+				++X1;
+				if (cnt % 2 == 0) {
+					--Y1;
+				}
+			}
+			if (move == 1) {
+				++X1;
+				if (cnt % 2 == 0) {
+					++Y1;
+				}
+			}
+			if (move == 2) {
+				++X1;
+				if (cnt % 2 == 0) {
+					--Y1;
+				}
+			}
+			if (move == 3) {
+				++X1;
+				if (cnt % 2 == 0) {
+					++Y1;
+				}
+			}
+		}
+
+		cnt++;
+
+		if (cnt == 3) {
+			cnt = 0;
+		}
 
 		++move_count;
-		if (move_count == 20){ // do a move for 20 frames, then switch
+		if (move_count == 60){ // do a move for 20 frames, then switch
 			move_count = 0;
 			++move;
 		}

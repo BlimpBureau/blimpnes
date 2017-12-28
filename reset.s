@@ -176,4 +176,4 @@ irq:
 
 .segment "CHARS"
 
-	.incbin "1sprite.chr"
+	.incbin "blimp.chr"
